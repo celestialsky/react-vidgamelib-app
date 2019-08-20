@@ -15,7 +15,6 @@ import { NavContainer,
 
 const NavBar = ({ routes = [] }) => {
   const [ isOpen, setIsOpen ] = useState(false)
-  const[ hello, setHello ] = useState({name: 'lilly'})
 
   //state = {
   //  isOpen = false
@@ -31,10 +30,9 @@ const NavBar = ({ routes = [] }) => {
   console.log(isOpen);
   return (
     <NavContainer color={'pink'}>
-      <button onClick={() => setHello("hi there")}>set hello</button>
       <NavRow>
         <NavLeft>
-          <p> hello </p>
+          <p> VIDYA GAMES </p>
         </NavLeft>
         <NavMiddle> </NavMiddle>
         <NavRight>
