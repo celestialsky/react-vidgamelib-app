@@ -39,7 +39,7 @@ class Login extends Component {
           <Form onSubmit={this.handleSubmit}>
               <Segment stacked>
               Email:
-              <Form.Input fluid icon='mail' iconPosition='left' placeholder='email' type='text' name='email' onChange={this.handleChange}/>
+              <Form.Input fluid icon='mail' iconPosition='left' placeholder='Enter E-mail ' type='text' name='email' onChange={this.handleChange}/>
               password:
               <Form.Input fluid icon='lock' iconPosition='left' type='password' name='password' onChange={this.handleChange}/>
               <Button fluid size='large' type='sumbit'>Login</Button>

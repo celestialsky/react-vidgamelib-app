@@ -9,24 +9,18 @@ class Register extends Component {
     this.state = {
       username: '',
       password: '',
-      email: '',
-      image: {}
+      email: ''
     }
   }
   handleChange = (e) => {
     if(e.target.name !== 'image'){
       this.setState({[e.target.name]: e.target.value});
-    } else {
-      // file upload
-      console.log(e.target.files[0])
-      this.setState({image: e.target.files[0]});
     }
   }
   handleSubmit = async (e) => {
     e.preventDefault();
 
     const data = new FormData();
-    data.append('file', this.state.image);
     data.append('username', this.state.username);
     data.append('password', this.state.password);
     data.append('email', this.state.email);
@@ -37,13 +31,12 @@ class Register extends Component {
     }
 
     const registerCall = this.props.register(data);
-
-    registerCall.then((data) => {
-      console.log(data)
-        if(data.status.message === "Success"){
+    registerCall.then((response) => {
+      console.log(response)
+        if(response.status.message === "Success"){
           this.props.history.push('/profile')
         } else {
-          console.log(data, ' this should have an error message? How could you display that on the screen')
+          console.log(response, ' this should have an error message? How could you display that on the screen')
         }
     })
   }
@@ -62,8 +55,7 @@ class Register extends Component {
               <Form.Input fluid icon='mail' iconPosition='left' placeholder='email' type='text' name='email' onChange={this.handleChange}/>
               password:
               <Form.Input fluid icon='lock' iconPosition='left' type='password' name='password' onChange={this.handleChange}/>
-              image:
-              <Form.Input fluid icon='image' iconPosition='left' type="file" name='image' onChange={this.handleChange}/>
+
               <Button fluid size='large' type='sumbit'>Register</Button>
               <Message>
                 Already a member? <Link to='/Login'>Login</Link>

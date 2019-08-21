@@ -1,43 +1,93 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom';
 import './App.css';
-import NavBar from './NavBar'
+import NavBar from './NavBar';
 import { Button, Form, Grid, Header, Image, Message, Segment} from 'semantic-ui-react';
 import { routes } from './const/routes';
+import Login from './Login';
 import Register from './Register';
-console.log(Register)
+import Profile from './Profile'
 
-function App() {
-  const components = {
-    home: Home,
-    consoles: Consoles,
-    login: Login,
+class App extends Component {
+  state = {
     username: '',
     image: '',
     email: '',
-    loading: true,
-    register: Register
+    loading: true
   }
 
-  return (
-    <div className="App">
-      <NavBar routes={routes}/>
-      <Switch>
-        <Route exact path='/' render = {() => <div>Root</div>} />
-          {
-            routes.map(route => {
-              const ComponentName = components[route]
-              return <Route exact path= {`/${route}`}  render = {() =>
-                <ComponentName>
-                this is the child
-                </ ComponentName>} />
-              }
-            )
+  logIn = async (loginInfo) => {
+      try {
+
+        const loginResponse = await fetch('http://localhost:8000/user/login', {
+          method: 'POST',
+          credentials: 'include',// on every request we have to send the cookie
+          body: JSON.stringify(loginInfo),
+          headers: {
+            'Content-Type': 'application/json'
           }
-      </Switch>
-    </div>
-  );
+        })
+
+        const parsedResponse = await loginResponse.json();
+
+        this.setState(() => {
+          return {
+            ...parsedResponse.data,
+            loading: false
+          }
+        })
+
+        return parsedResponse
+
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+    register = async (data) => {
+        console.log("registering user")
+         try {
+
+          const registerResponse = await fetch('http://localhost:8000/user/register', {
+            method: 'POST',
+
+            credentials: 'include',// on every request we have to send the cookie
+            body: data,
+            headers: {
+              'enctype': 'multipart/form-data'
+            }
+          })
+          console.log('finished fetching')
+          console.log(registerResponse)
+          const parsedResponse = await registerResponse.json();
+          console.log(parsedResponse, "<===this is the parsed response")
+
+          this.setState({
+            ...parsedResponse.data,
+            loading: false
+          })
+          return parsedResponse;
+
+        } catch (err) {
+          console.log(err)
+        }
+      }
+
+  render(){
+      return (
+        <main>
+        <NavBar routes={routes}/>
+          <Switch>
+            <Route exact path="/login" render={(props) => <Login {...props} logIn={this.logIn} />} />
+            <Route exact path="/register" render={(props) => <Register {...props} register={this.register} /> } />
+            <Route exact path="/profile" render={(props) =>  <Profile {...props} userInfo={this.state}/> } />
+            <Route exact path="/sign up" render={(props) => <Register {...props} register={this.register} /> } />
+          </Switch>
+        </main>
+    );
+  }
 }
+
 
 const Consoles = () =>
 <div>
@@ -48,58 +98,6 @@ const Home = (props) =>
 <div>
   I am the {props.children} component
 </div>
-
-class Login extends Component {
-  constructor(){
-    super();
-
-    this.state = {
-      email: '',
-      password: ''
-    }
-  }
-  handleChange = (e) => {
-    this.setState({[e.target.name]: e.target.value});
-  }
-  handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const login = this.props.logIn(this.state);
-
-    login.then((data) => {
-      if(data.status.message === 'Success'){
-        this.props.history.push('/profile')
-      } else {
-        console.log(data, this.props)
-      }
-    }).catch((err) => {
-      console.log(err)
-    })
-
-  }
-  render(){
-    return (
-      <Grid textAlign='center' verticalAlign='middle' style={{ height: '100vh'}}>
-        <Grid.Column style={{maxWidth: 450}}>
-          <Header as='h2' textAlign='center'>
-            Login
-          </Header>
-          <Form onSubmit={this.handleSubmit}>
-              <Segment stacked>
-              Email:
-              <Form.Input fluid icon='mail' iconPosition='left' placeholder='Enter email' type='text' name='email' onChange={this.handleChange}/>
-              password:
-              <Form.Input fluid icon='lock' iconPosition='left' type='password' name='password' onChange={this.handleChange}/>
-              <Button fluid size='large' type='sumbit'>Login</Button>
-
-            </Segment>
-          </Form>
-        </Grid.Column>
-      </Grid>
-      )
-  }
-}
-
 
 
 export default App;
