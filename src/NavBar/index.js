@@ -33,13 +33,13 @@ const NavBar = ({ routes = [] }) => {
         <NavMiddle> </NavMiddle>
           <Dropdown text='Consoles'>
             <Dropdown.Menu>
-              <Link to ='/home'> <Dropdown.Item text='PC' /></ Link>
+              <Link to ='/pc'> <Dropdown.Item text='PC' /></ Link>
               <Dropdown.Divider />
               <Link to ='/ps'><Dropdown.Item text='PS4' /></ Link>
               <Dropdown.Divider />
-              <Link to ='/>'><Dropdown.Item text='NINTENDO SWITCH' /></ Link>
+              <Link to ='/nintendo'><Dropdown.Item text='NINTENDO SWITCH' /></ Link>
               <Dropdown.Divider />
-              <Link to ='/xbox>'><Dropdown.Item text='XBOX ONE' /></ Link>
+              <Link to ='/xbox'><Dropdown.Item text='XBOX ONE' /></ Link>
             </Dropdown.Menu>
           </Dropdown>
 

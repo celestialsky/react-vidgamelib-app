@@ -45,9 +45,8 @@ class Home extends Component {
           return (
             <div>
               <b>{i + 1}. {g.name}</b> - {g.summary}<br/>
-              <b>Critic rating: </b><i style={{"color": color}}>{isNaN(g.aggregated_rating) ? "Not Reviewed" : Math.round(g.aggregated_rating)  }</i><br/>
+              <b>Critic rating: </b><i style={{"color": color}}>{isNaN(g.aggregated_rating) ? "Not Reviewed" : Math.round(g.aggregated_rating) + "%"  }</i><br/>
               <br/>
-
             </div>
           )
         })

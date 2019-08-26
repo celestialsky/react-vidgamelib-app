@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Form, Grid, Header, Message, Segment, Dropdown} from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
-class Playstation extends Component {
+class Windows extends Component {
   state = {
     names: '',
     cover:'',
@@ -31,7 +31,7 @@ class Playstation extends Component {
   popularGames = async () => {
     try {
 
-      const popResponse = await fetch('http://localhost:8000/playstation', {
+      const popResponse = await fetch('http://localhost:8000/pc', {
         method: "GET",
         credentials: 'include'
       })
@@ -56,8 +56,9 @@ class Playstation extends Component {
             <div>
               <img src={p.url}/><br/>
               <b>{i + 1}. {p.name}- </b> {p.summary}<br/>
+
               <br/>
-              <b>Releases: </b> {p.human}
+
             </div>
           )
         })
@@ -67,4 +68,4 @@ class Playstation extends Component {
   }
 }
 
-export default Playstation;
+export default Windows;

@@ -10,6 +10,8 @@ import Profile from './Profile'
 import Home from './Home'
 import Playstation from './PS'
 import Xbox from './Xbox'
+import Windows from './PC'
+import Nintendo from './Switch'
 
 class App extends Component {
   state = {
@@ -84,7 +86,9 @@ class App extends Component {
         <Switch>
             <Route exact path="/home" render={() => <Home/>} />
             <Route exact path="/ps" render={() => <Playstation/>} />
+            <Route exact path="/pc" render={() => <Windows/>} />
             <Route exact path="/xbox" render={() => <Xbox/>} />
+            <Route exact path="/nintendo" render={() => <Nintendo/>} />    
             <Route exact path="/login" render={(props) => <Login {...props} logIn={this.logIn} />} />
             <Route exact path="/register" render={(props) => <Register {...props} register={this.register} /> } />
             <Route exact path="/profile" render={(props) =>  <Profile {...props} userInfo={this.state}/> } />

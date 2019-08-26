@@ -11,9 +11,19 @@ class Xbox extends Component {
 
   componentDidMount(){
     this.popularGames().then(data=>{
-      console.log(data)
+      const { games, images } = data
+      let gamesArray = []
+      games.forEach(g=>{
+        let gameObj = {}
+        images.forEach(i=>{
+          if (g.cover === i.id){
+            gameObj = {...g,...i}
+            gamesArray.push(gameObj)
+          }
+        })
+      })
       this.setState({
-        games: data.xbox
+        games: gamesArray
       })
     })
   }
@@ -35,6 +45,7 @@ class Xbox extends Component {
   }
 
   render(){
+    console.log(this.state.games)
     return(
     <div>
       Coming soon!<br/>
@@ -43,6 +54,7 @@ class Xbox extends Component {
           this.state.games.map((p,i)=>{
           return (
             <div>
+              <img src={p.url}/><br/>
               <b>{i + 1}. {p.name}- </b> {p.summary}<br/>
 
               <br/>
