@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Form, Grid, Header, Message, Segment, Dropdown} from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
-class Playstation extends Component {
+class Xbox extends Component {
   state = {
     names: '',
     cover:'',
@@ -11,19 +11,9 @@ class Playstation extends Component {
 
   componentDidMount(){
     this.popularGames().then(data=>{
-      const { games, images } = data
-      let gamesArray = []
-      games.forEach(g=>{
-        let gameObj = {}
-        images.forEach(i=>{
-          if (g.cover === i.id){
-            gameObj = {...g,...i}
-            gamesArray.push(gameObj)
-          }
-        })
-      })
+      console.log(data)
       this.setState({
-        games: gamesArray
+        games: data.xbox
       })
     })
   }
@@ -31,7 +21,7 @@ class Playstation extends Component {
   popularGames = async () => {
     try {
 
-      const popResponse = await fetch('http://localhost:8000/playstation', {
+      const popResponse = await fetch('http://localhost:8000/xbox', {
         method: "GET",
         credentials: 'include'
       })
@@ -45,7 +35,6 @@ class Playstation extends Component {
   }
 
   render(){
-    console.log(this.state.games)
     return(
     <div>
       Coming soon!<br/>
@@ -54,7 +43,6 @@ class Playstation extends Component {
           this.state.games.map((p,i)=>{
           return (
             <div>
-              <img src={p.url}/><br/>
               <b>{i + 1}. {p.name}- </b> {p.summary}<br/>
 
               <br/>
@@ -68,4 +56,4 @@ class Playstation extends Component {
   }
 }
 
-export default Playstation;
+export default Xbox;

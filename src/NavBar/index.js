@@ -39,7 +39,7 @@ const NavBar = ({ routes = [] }) => {
               <Dropdown.Divider />
               <Link to ='/>'><Dropdown.Item text='NINTENDO SWITCH' /></ Link>
               <Dropdown.Divider />
-              <Link to ='/>'><Dropdown.Item text='XBOX ONE' /></ Link>
+              <Link to ='/xbox>'><Dropdown.Item text='XBOX ONE' /></ Link>
             </Dropdown.Menu>
           </Dropdown>
 
