@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, Grid, Header, Image, Message, Segment} from 'semantic-ui-react';
+import { Button, Form, Grid, Header, Message, Segment} from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 class Register extends Component {
@@ -12,14 +12,16 @@ class Register extends Component {
       email: ''
     }
   }
-  handleChange = (e) => {
-    if(e.target.name !== 'image'){
-      this.setState({[e.target.name]: e.target.value});
-    }
-  }
-  handleSubmit = async (e) => {
-    e.preventDefault();
 
+  handleChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
+  handlSubmit = async (e) => {
+
+    e.preventDefault();
     const data = new FormData();
     data.append('username', this.state.username);
     data.append('password', this.state.password);
@@ -40,14 +42,16 @@ class Register extends Component {
         }
     })
   }
+
   render(){
+
     return (
       <Grid textAlign='center' verticalAlign='middle' style={{ height: '100vh'}}>
         <Grid.Column style={{maxWidth: 450}}>
           <Header as='h2' textAlign='center'>
             Register
           </Header>
-          <Form onSubmit={this.handleSubmit}>
+          <Form onSubmit={this.handlSubmit}>
               <Segment stacked>
               Username:
               <Form.Input fluid icon='user' iconPosition='left' placeholder='username' type='text' name='username' onChange={this.handleChange}/>
@@ -55,7 +59,6 @@ class Register extends Component {
               <Form.Input fluid icon='mail' iconPosition='left' placeholder='email' type='text' name='email' onChange={this.handleChange}/>
               password:
               <Form.Input fluid icon='lock' iconPosition='left' type='password' name='password' onChange={this.handleChange}/>
-
               <Button fluid size='large' type='sumbit'>Register</Button>
               <Message>
                 Already a member? <Link to='/Login'>Login</Link>

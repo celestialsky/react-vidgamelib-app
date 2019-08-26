@@ -2,17 +2,20 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import NavBar from './NavBar';
-import { Button, Form, Grid, Header, Image, Message, Segment} from 'semantic-ui-react';
+import { Button, Form, Grid, Header, Image, Message, Segment, Dropdown} from 'semantic-ui-react';
 import { routes } from './const/routes';
 import Login from './Login';
 import Register from './Register';
 import Profile from './Profile'
+import Home from './Home'
+import Playstation from './PS'
 
 class App extends Component {
   state = {
     username: '',
-    image: '',
     email: '',
+    search: '',
+    results: [],
     loading: true
   }
 
@@ -44,40 +47,42 @@ class App extends Component {
       }
     }
 
-    register = async (data) => {
-        console.log("registering user")
-         try {
+      register = async (data) => {
+          console.log("registering user")
+           try {
 
-          const registerResponse = await fetch('http://localhost:8000/user/register', {
-            method: 'POST',
+            const registerResponse = await fetch('http://localhost:8000/user/register', {
+              method: 'POST',
+              credentials: 'include',// on every request we have to send the cookie
+              body: data,
+              headers: {
+                'enctype': 'multipart/form-data'
+              }
+            })
+            console.log('finished fetching')
+            console.log(registerResponse)
+            const parsedResponse = await registerResponse.json();
+            console.log(parsedResponse, "<===this is the parsed response")
 
-            credentials: 'include',// on every request we have to send the cookie
-            body: data,
-            headers: {
-              'enctype': 'multipart/form-data'
-            }
-          })
-          console.log('finished fetching')
-          console.log(registerResponse)
-          const parsedResponse = await registerResponse.json();
-          console.log(parsedResponse, "<===this is the parsed response")
+            this.setState({
+              ...parsedResponse.data,
+              loading: false
+            })
+            return parsedResponse;
 
-          this.setState({
-            ...parsedResponse.data,
-            loading: false
-          })
-          return parsedResponse;
-
-        } catch (err) {
-          console.log(err)
+          } catch (err) {
+            console.log(err)
+          }
         }
-      }
+
 
   render(){
       return (
         <main>
         <NavBar routes={routes}/>
-          <Switch>
+        <Switch>
+            <Route exact path="/home" render={() => <Home/>} />
+            <Route exact path="/ps" render={() => <Playstation/>} />
             <Route exact path="/login" render={(props) => <Login {...props} logIn={this.logIn} />} />
             <Route exact path="/register" render={(props) => <Register {...props} register={this.register} /> } />
             <Route exact path="/profile" render={(props) =>  <Profile {...props} userInfo={this.state}/> } />
@@ -88,16 +93,6 @@ class App extends Component {
   }
 }
 
-
-const Consoles = () =>
-<div>
-  I am the consoles component
-</div>
-
-const Home = (props) =>
-<div>
-  I am the {props.children} component
-</div>
 
 
 export default App;

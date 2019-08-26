@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { routes } from '../const/routes'
 import { NavLink } from 'react-router-dom'
+import { Dropdown } from 'semantic-ui-react'
+
 
 import { NavContainer,
          NavRow,
@@ -13,17 +15,11 @@ import { NavContainer,
          Overlay
  } from './style'
 
+
 const NavBar = ({ routes = [] }) => {
   const [ isOpen, setIsOpen ] = useState(false)
 
-  //state = {
-  //  isOpen = false
-  //}
 
-  //const setIsOpen = (boolean) =>
-  //this.setState({
-  //    isOpen:boolean
-  //})
 
   window.onresize = () => (window.innerWidth > 900 && isOpen) && setIsOpen(false)
 
@@ -35,12 +31,25 @@ const NavBar = ({ routes = [] }) => {
           <p> VIDYA GAMES </p>
         </NavLeft>
         <NavMiddle> </NavMiddle>
+          <Dropdown text='Consoles'>
+            <Dropdown.Menu>
+              <Link to ='/home'> <Dropdown.Item text='PC' /></ Link>
+              <Dropdown.Divider />
+              <Link to ='/ps'><Dropdown.Item text='PS4' /></ Link>
+              <Dropdown.Divider />
+              <Link to ='/>'><Dropdown.Item text='NINTENDO SWITCH' /></ Link>
+              <Dropdown.Divider />
+              <Link to ='/>'><Dropdown.Item text='XBOX ONE' /></ Link>
+            </Dropdown.Menu>
+          </Dropdown>
+
         <NavRight>
           {
             routes.map(route =>
               <Link exact to={`/${route}`}>{route}</Link>
             )
           }
+
           <Hamburger setIsOpen={setIsOpen} isOpen={isOpen} />
         </NavRight>
       </NavRow>
