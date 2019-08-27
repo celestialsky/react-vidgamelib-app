@@ -31,7 +31,7 @@ class Playstation extends Component {
   popularGames = async () => {
     try {
 
-      const popResponse = await fetch('http://localhost:8000/playstation', {
+      const popResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/playstation`, {
         method: "GET",
         credentials: 'include'
       })

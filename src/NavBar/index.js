@@ -30,7 +30,9 @@ const NavBar = ({ routes = [] }) => {
         <NavLeft>
           <p> VIDYA GAMES </p>
         </NavLeft>
-        <NavMiddle> </NavMiddle>
+        <NavMiddle>
+          
+        </NavMiddle>
           <Dropdown text='Consoles'>
             <Dropdown.Menu>
               <Link to ='/pc'> <Dropdown.Item text='PC' /></ Link>

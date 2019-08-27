@@ -21,7 +21,7 @@ class Home extends Component {
   popularGames = async () => {
     try {
 
-      const popResponse = await fetch('http://localhost:8000/games', {
+      const popResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/games`, {
         method: "GET",
         credentials: 'include'
       })
@@ -44,7 +44,7 @@ class Home extends Component {
             const color = Math.round(g.aggregated_rating) > 50 ? "green" : "red"
           return (
             <div>
-              <b>{i + 1}. {g.name}</b> - {g.summary}<br/>
+              <b>{i + 1}. <Link to ='/ps'> {g.name}</Link></b> - {g.summary}<br/>
               <b>Critic rating: </b><i style={{"color": color}}>{isNaN(g.aggregated_rating) ? "Not Reviewed" : Math.round(g.aggregated_rating) + "%"  }</i><br/>
               <br/>
             </div>

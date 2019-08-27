@@ -31,7 +31,7 @@ class Xbox extends Component {
   popularGames = async () => {
     try {
 
-      const popResponse = await fetch('http://localhost:8000/xbox', {
+      const popResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/xbox`, {
         method: "GET",
         credentials: 'include'
       })
@@ -45,7 +45,6 @@ class Xbox extends Component {
   }
 
   render(){
-    console.log(this.state.games)
     return(
     <div>
       Coming soon!<br/>
@@ -58,7 +57,6 @@ class Xbox extends Component {
               <b>{i + 1}. {p.name}- </b> {p.summary}<br/>
 
               <br/>
-
             </div>
           )
         })
